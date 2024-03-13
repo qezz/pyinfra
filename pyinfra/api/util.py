@@ -415,7 +415,7 @@ def get_contents(filename_or_io: str) -> str:
 
     file_data = get_file_io(filename_or_io)
     with file_data as file_io:
-        return file_io.read()
+        return file_io.read().decode("utf-8")
 
 
 def get_path_permissions_mode(pathname: str):
