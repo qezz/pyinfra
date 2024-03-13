@@ -862,13 +862,15 @@ def put(
     print("remote_content:", remote_content)
 
     import difflib
-    d = difflib.unified_diff(
-        remote_content.splitlines(),
-        local_content.splitlines(),
-        fromfile='before',
-        tofile='after'
-    )
-    print("".join(d))
+    for line in difflib.unified_diff(
+            remote_content.splitlines(),
+            local_content.splitlines(),
+            fromfile='before',
+            tofile='after',
+            lineterm='',
+    ):
+        print(line)
+
 
     if create_remote_dir:
         yield from _create_remote_dir(dest, user, group)
