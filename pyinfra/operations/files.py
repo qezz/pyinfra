@@ -824,6 +824,7 @@ def put(
             src = os.path.join(state.cwd, src)
 
         local_file = src
+        print("local:", src)
 
         if os.path.isfile(local_file):
             local_sum = get_file_sha1(local_file)
@@ -845,6 +846,7 @@ def put(
         mode = ensure_mode_int(mode)
 
     remote_file = host.get_fact(File, path=dest)
+    print("remote:", remote_file)
 
     if not remote_file and bool(host.get_fact(Directory, path=dest)):
         dest = unix_path_join(dest, os.path.basename(src))
