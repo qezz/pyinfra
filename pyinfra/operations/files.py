@@ -830,8 +830,8 @@ def put(
 
         if os.path.isfile(local_file):
             local_sum = get_file_sha1(local_file)
-            content = get_contents(local_file)
-            print("content:", content)
+            local_content = get_contents(local_file)
+            print("content:", local_content)
         elif assume_exists:
             local_sum = None
         else:
@@ -853,12 +853,22 @@ def put(
     print("remote:", remote_file)
     # rem_content = get_contents(dest)
     # print("rem_content:", rem_content)
-    remote_content = host.get_fact(FileContents, path=dest)
-    print("remote_content:", remote_content)
 
     if not remote_file and bool(host.get_fact(Directory, path=dest)):
         dest = unix_path_join(dest, os.path.basename(src))
         remote_file = host.get_fact(File, path=dest)
+
+    remote_content = host.get_fact(FileContents, path=dest)
+    print("remote_content:", remote_content)
+
+    import difflib
+    d = difflib.unified_diff(
+        remote_content.splitlines(),
+        local_content.splitlines(),
+        fromfile='before',
+        tofile='after'
+    )
+    print("".join(d))
 
     if create_remote_dir:
         yield from _create_remote_dir(dest, user, group)
