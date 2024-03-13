@@ -147,6 +147,27 @@ class File(FactBase[Union[FileDict, Literal[False], None]]):
         return data
 
 
+class FileContents(FactBase[Union[str, None]]):
+
+    type = "file_contents"
+
+    def command(self, path):
+        return make_formatted_string_command(
+            (
+                # only cat if the path exists (file or symlink)
+                "! (test -e {0} || test -L {0} ) || "
+                "( cat {0} )"
+            ),
+            QuoteString(path),
+        )
+
+    def process(self, output) -> Union[str, None]:
+        print("process output", output)
+
+        return output
+
+
+
 class Link(File):
     """
     Returns information about a link on the remote system:

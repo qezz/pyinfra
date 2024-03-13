@@ -43,6 +43,7 @@ from pyinfra.facts.files import (
     Block,
     Directory,
     File,
+    FileContents,
     FindFiles,
     FindInFile,
     Flags,
@@ -850,6 +851,10 @@ def put(
 
     remote_file = host.get_fact(File, path=dest)
     print("remote:", remote_file)
+    # rem_content = get_contents(dest)
+    # print("rem_content:", rem_content)
+    remote_content = host.get_fact(FileContents, path=dest)
+    print("remote_content:", remote_content)
 
     if not remote_file and bool(host.get_fact(Directory, path=dest)):
         dest = unix_path_join(dest, os.path.basename(src))
@@ -878,6 +883,7 @@ def put(
 
         # Check sha1sum, upload if needed
         if local_sum != remote_sum:
+            print("local sum != remote sum")
             yield FileUploadCommand(
                 local_file,
                 dest,
