@@ -30,6 +30,7 @@ from pyinfra.api import (
 from pyinfra.api.command import make_formatted_string_command
 from pyinfra.api.util import (
     get_call_location,
+    get_contents,
     get_file_sha1,
     get_path_permissions_mode,
     get_template,
@@ -828,6 +829,8 @@ def put(
 
         if os.path.isfile(local_file):
             local_sum = get_file_sha1(local_file)
+            content = get_contents(local_file)
+            print("content:", content)
         elif assume_exists:
             local_sum = None
         else:

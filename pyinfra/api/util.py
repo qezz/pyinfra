@@ -408,6 +408,15 @@ def get_file_sha1(filename_or_io):
 
     return digest
 
+def get_contents(filename_or_io: str) -> str:
+    """
+    Get the contents of a file or file object.
+    """
+
+    file_data = get_file_io(filename_or_io)
+    with file_data as file_io:
+        return file_io.read()
+
 
 def get_path_permissions_mode(pathname: str):
     """
