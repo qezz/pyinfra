@@ -23,10 +23,12 @@ except ImportError:  # fallback so that the imported classes always exist
         __getattr__ = lambda self, name: ''
     Fore = Back = Style = ColorFallback()
 
-def color_diff(diff_lines):
+def color_diff(diff_lines: list[str]):
     for line in diff_lines:
         if line.startswith('@'):
-            yield Fore.MAGENTA + line + Fore.RESET
+            accidentally_mutliline = line.splitlines()
+            for line in accidentally_mutliline:
+                yield Fore.MAGENTA + line + Fore.RESET
         if line.startswith('+'):
             yield Fore.GREEN + line + Fore.RESET
         elif line.startswith('-'):
