@@ -162,8 +162,6 @@ class FileContents(FactBase[Union[str, None]]):
         )
 
     def process(self, output) -> Union[str, None]:
-        print("process output", output)
-
         return "\n".join(output)
 
 
