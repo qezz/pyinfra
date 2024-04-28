@@ -861,13 +861,18 @@ def put(
     remote_content = host.get_fact(FileContents, path=dest)
     print("remote_content:", remote_content)
 
+    if remote_content is None:
+        _remote_content = ""
+    else:
+        _remote_content = remote_content
+
     import difflib
     lines = difflib.unified_diff(
-            remote_content.splitlines(),
-            local_content.splitlines(),
-            fromfile='before',
-            tofile='after',
-            lineterm='',
+        _remote_content.splitlines(),
+        local_content.splitlines(),
+        fromfile='before',
+        tofile='after',
+        lineterm='',
     )
     print('\n'.join(lines))
 
