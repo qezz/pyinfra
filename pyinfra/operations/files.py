@@ -25,6 +25,8 @@ except ImportError:  # fallback so that the imported classes always exist
 
 def color_diff(diff_lines):
     for line in diff_lines:
+        if line.startswith('@'):
+            yield Fore.MAGENTA + line + Fore.RESET
         if line.startswith('+'):
             yield Fore.GREEN + line + Fore.RESET
         elif line.startswith('-'):
@@ -896,7 +898,8 @@ def put(
     )
     # print('\n'.join(lines))
     colored_lines = color_diff(lines)
-    print('\n'.join(colored_lines))
+    print("\n".join(colored_lines))
+    print("")
 
 
     if create_remote_dir:
