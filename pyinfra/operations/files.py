@@ -24,9 +24,7 @@ except ImportError:  # fallback so that the imported classes always exist
     Fore = Back = Style = ColorFallback()
 
 def color_diff(diff_lines):
-    print("color_diff lines:", diff_lines)
     for line in diff_lines:
-        print("color_diff processing line:", line)
         if line.startswith('@'):
             yield Fore.MAGENTA + line + Fore.RESET
         elif line.startswith('+'):
@@ -36,7 +34,6 @@ def color_diff(diff_lines):
         elif line.startswith('^'):
             yield Fore.BLUE + line + Fore.RESET
         else:
-            print("color_diff line didn't match:", line)
             yield line
 
 
@@ -899,11 +896,9 @@ def put(
         tofile=f"after: {src}",
         lineterm='',
     )
-    # for line in lines:
-    #     print("pre colored diff:", line)
 
     colored_lines = color_diff(lines)
-    print("\n|\n".join(colored_lines))
+    print("\n".join(colored_lines))
     print("")
 
 
@@ -930,7 +925,7 @@ def put(
 
         # Check sha1sum, upload if needed
         if local_sum != remote_sum:
-            print("local sum != remote sum")
+            # print("local sum != remote sum")
             yield FileUploadCommand(
                 local_file,
                 dest,
