@@ -853,7 +853,7 @@ def put(
         if os.path.isfile(local_file):
             local_sum = get_file_sha1(local_file)
             local_content = get_contents(local_file)
-            print("content:", local_content)
+            # print("content:", local_content)
         elif assume_exists:
             local_sum = None
         else:
@@ -872,7 +872,7 @@ def put(
         mode = ensure_mode_int(mode)
 
     remote_file = host.get_fact(File, path=dest)
-    print("remote:", remote_file)
+    # print("remote:", remote_file)
     # rem_content = get_contents(dest)
     # print("rem_content:", rem_content)
 
@@ -881,7 +881,7 @@ def put(
         remote_file = host.get_fact(File, path=dest)
 
     remote_content = host.get_fact(FileContents, path=dest)
-    print("remote_content:", remote_content)
+    # print("remote_content:", remote_content)
 
     if remote_content is None:
         _remote_content = ""
