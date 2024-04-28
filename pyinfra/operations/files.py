@@ -15,6 +15,26 @@ from typing import Union
 
 from jinja2 import TemplateRuntimeError, TemplateSyntaxError, UndefinedError
 
+try:
+    from colorama import Fore, Back, Style, init
+    init()
+except ImportError:  # fallback so that the imported classes always exist
+    class ColorFallback():
+        __getattr__ = lambda self, name: ''
+    Fore = Back = Style = ColorFallback()
+
+def color_diff(diff_lines):
+    for line in diff_lines:
+        if line.startswith('+'):
+            yield Fore.GREEN + line + Fore.RESET
+        elif line.startswith('-'):
+            yield Fore.RED + line + Fore.RESET
+        elif line.startswith('^'):
+            yield Fore.BLUE + line + Fore.RESET
+        else:
+            yield line
+
+
 from pyinfra import host, logger, state
 from pyinfra.api import (
     FileDownloadCommand,
@@ -874,7 +894,9 @@ def put(
         tofile='after',
         lineterm='',
     )
-    print('\n'.join(lines))
+    # print('\n'.join(lines))
+    colored_lines = color_diff(lines)
+    print('\n'.join(colored_lines))
 
 
     if create_remote_dir:
