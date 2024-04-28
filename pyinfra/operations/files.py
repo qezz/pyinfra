@@ -23,7 +23,7 @@ except ImportError:  # fallback so that the imported classes always exist
         __getattr__ = lambda self, name: ''
     Fore = Back = Style = ColorFallback()
 
-def color_diff(diff_lines: list[str]):
+def color_diff(diff_lines):
     print("color_diff lines:", diff_lines)
     for line in diff_lines:
         print("color_diff processing line:", line)
@@ -38,6 +38,7 @@ def color_diff(diff_lines: list[str]):
         elif line.startswith('^'):
             yield Fore.BLUE + line + Fore.RESET
         else:
+            print("color_diff line didn't match:", line)
             yield line
 
 
@@ -900,7 +901,9 @@ def put(
         tofile=f"after: {src}",
         lineterm='',
     )
-    # print('\n'.join(lines))
+    for line in lines:
+        print("pre colored diff:", line)
+
     colored_lines = color_diff(lines)
     print("\n|\n".join(colored_lines))
     print("")
