@@ -850,7 +850,7 @@ def put(
             src = os.path.join(state.cwd, src)
 
         local_file = src
-        print("local:", src)
+        # print("local:", src)
 
         if os.path.isfile(local_file):
             local_sum = get_file_sha1(local_file)
@@ -894,13 +894,13 @@ def put(
     lines = difflib.unified_diff(
         _remote_content.splitlines(),
         local_content.splitlines(),
-        fromfile='before',
-        tofile='after',
+        fromfile=f"before: {src}",
+        tofile=f"after: {dest}",
         lineterm='',
     )
     # print('\n'.join(lines))
     colored_lines = color_diff(lines)
-    print("\n".join(colored_lines))
+    print("\n|\n".join(colored_lines))
     print("")
 
 
