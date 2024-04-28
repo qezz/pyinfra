@@ -28,10 +28,8 @@ def color_diff(diff_lines):
     for line in diff_lines:
         print("color_diff processing line:", line)
         if line.startswith('@'):
-            accidentally_mutliline = line.splitlines()
-            for line in accidentally_mutliline:
-                yield Fore.MAGENTA + line + Fore.RESET
-        if line.startswith('+'):
+            yield Fore.MAGENTA + line + Fore.RESET
+        elif line.startswith('+'):
             yield Fore.GREEN + line + Fore.RESET
         elif line.startswith('-'):
             yield Fore.RED + line + Fore.RESET
