@@ -24,7 +24,9 @@ except ImportError:  # fallback so that the imported classes always exist
     Fore = Back = Style = ColorFallback()
 
 def color_diff(diff_lines: list[str]):
+    print("color_diff lines:", diff_lines)
     for line in diff_lines:
+        print("color_diff processing line:", line)
         if line.startswith('@'):
             accidentally_mutliline = line.splitlines()
             for line in accidentally_mutliline:
