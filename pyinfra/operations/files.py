@@ -840,6 +840,7 @@ def put(
     if hasattr(src, "read"):
         local_file = src
         local_sum = get_file_sha1(src)
+        local_content = get_contents(local_file)
 
     # Assume string filename
     else:
@@ -888,10 +889,15 @@ def put(
     else:
         _remote_content = remote_content
 
+    if local_content is None:
+        _local_content = ""
+    else:
+        _local_content = local_content
+
     import difflib
     lines = difflib.unified_diff(
         _remote_content.splitlines(),
-        local_content.splitlines(),
+        _local_content.splitlines(),
         fromfile=f"before: {dest}",
         tofile=f"after: {src}",
         lineterm='',
