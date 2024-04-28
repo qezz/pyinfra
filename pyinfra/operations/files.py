@@ -901,8 +901,8 @@ def put(
         tofile=f"after: {src}",
         lineterm='',
     )
-    for line in lines:
-        print("pre colored diff:", line)
+    # for line in lines:
+    #     print("pre colored diff:", line)
 
     colored_lines = color_diff(lines)
     print("\n|\n".join(colored_lines))
