@@ -896,8 +896,8 @@ def put(
     lines = difflib.unified_diff(
         _remote_content.splitlines(),
         local_content.splitlines(),
-        fromfile=f"before: {src}",
-        tofile=f"after: {dest}",
+        fromfile=f"before: {dest}",
+        tofile=f"after: {src}",
         lineterm='',
     )
     # print('\n'.join(lines))
